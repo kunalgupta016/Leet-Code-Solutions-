@@ -1,3 +1,66 @@
+
+
+// T.C = O(N) AND S.C == O(N)
+class Solution {
+    
+    private:
+        void insertAtTail(Node*& head , Node*& tail ,int d){
+            Node* temp = new Node(d);
+            if(head==NULL){
+                head = temp;
+                tail = temp;
+            }
+            else{
+                tail->next  = temp;
+                tail = temp;
+            }
+        }
+    
+  public:
+    Node *copyList(Node *head) {
+        // Write your code here
+        
+        Node* cloneHead = NULL;
+        Node* cloneTail = NULL;
+        Node* temp = head;
+        while(temp!=NULL){
+            insertAtTail(cloneHead,cloneTail,temp->data);
+            temp = temp->next;
+            
+        }
+        
+        unordered_map<Node*,Node*>map;
+        Node* original = head;
+        Node* clone = cloneHead;
+        while(original!=NULL && clone!=NULL){
+            map[original] = clone;
+            clone = clone->next;
+            original = original->next;
+            
+        }
+        
+        original = head;
+        clone = cloneHead;
+        while(original!=NULL){
+            clone->random = map[original->random];
+            clone = clone->next;
+            original = original->next;
+            
+        }
+        
+        return cloneHead;
+        
+        
+        
+    }
+
+
+
+
+
+
+// best approach T.C == O(N) && S.C == O(1)
+
 class Solution {
     private:
         void insertAtTail(Node* &head, Node*&tail , int d){
